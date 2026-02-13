@@ -1,0 +1,45 @@
+name: Agent Runner (template)
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  run-agent:
+    name: Run agent (template)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run agent runner (dry-run if no secret)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
+        run: |
+          # If OPENAI_API_KEY is set but MODEL_NAME is not, fail with guidance.
+          if [ -n "${{ secrets.OPENAI_API_KEY }}" ] && [ -z "${{ secrets.MODEL_NAME }}" ]; then
+            echo "ERROR: OPENAI_API_KEY is set but MODEL_NAME is not. Set MODEL_NAME (e.g. gpt-5-mini) in repository secrets.";
+            exit 1;
+          fi
+
+          if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
+            echo "OPENAI_API_KEY not set — running dry-check of agent runner"
+            python scripts/agent_runner.py --dry-run
+          else
+            echo "Secrets present — agent runner will attempt to run. MODEL_NAME='${{ secrets.MODEL_NAME }}'"
+            python scripts/agent_runner.py
+          fi
+
+    # Note: This workflow is a template. Actual AI calls require adding provider SDKs
+    # and secrets. Use `AGENTS.md` for recommended prompts and setup.

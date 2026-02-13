@@ -3,3 +3,4 @@ fastapi[standard] ~= 0.112.0
 pillow ~= 10.4
 
 jupyter ~= 1.0 # For VSCode
+openai ~= 1.0
