@@ -12,6 +12,7 @@ Summary
 Checklist
 
 - [ ] I verified `scripts/agent_runner.py --dry-run` prints `AGENTS.md` context
+- [x] I verified `scripts/agent_runner.py --dry-run` prints `AGENTS.md` context
 - [ ] No cross-chapter refactors were made (changes are lesson/infra scoped)
 - [ ] If enabling live CI, add `OPENAI_API_KEY` and `MODEL_NAME` to repo/orga secrets
 

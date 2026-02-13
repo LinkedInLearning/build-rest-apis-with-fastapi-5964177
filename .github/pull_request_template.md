@@ -15,7 +15,12 @@ Provide 1-2 commands reviewers can run to verify the change (example below):
 
 ```
 pip install -r requirements.txt
+# Run directly (some lessons use `uvicorn.run` in `server.py`):
 python Ch05/05_01/server.py
+
+# Or run with uvicorn (recommended for auto-reload during edits):
+python -m uvicorn Ch05.05_01.server:app --reload
+
 curl http://localhost:8080/health
 ```
 

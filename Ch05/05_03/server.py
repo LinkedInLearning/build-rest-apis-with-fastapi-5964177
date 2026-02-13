@@ -4,7 +4,12 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-import users
+try:
+    # Prefer package-style relative import when running as a module
+    from . import users
+except Exception:
+    # Fall back to plain import when running server.py directly
+    import users
 
 app = FastAPI()
 

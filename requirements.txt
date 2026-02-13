@@ -4,7 +4,9 @@ pillow ~= 10.4
 
 # Tools used by contributors / CI
 jupyter ~= 1.0
-openai ~= 1.0
+# Optional: provider SDK used by `scripts/agent_runner.py` when enabled in CI.
+# Install only when you enable live agent runs: `pip install openai`
+# openai ~= 1.0
 uvicorn ~= 0.34.0
 
 # Test deps
