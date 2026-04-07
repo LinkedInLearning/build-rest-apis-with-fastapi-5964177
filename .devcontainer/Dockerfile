@@ -14,6 +14,8 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 #    && rm -rf /tmp/pip-tmp
 
 # [Optional] Uncomment this section to install additional OS packages.
+# yarn has gpg signature issues
+RUN rm /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get -y install --no-install-recommends \
 	curl \
